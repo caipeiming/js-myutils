@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+<script src="../jquery-1.12.3.min.js"></script>
+<script src="jq_mydialog.js"></script>
+<link href="my_dialog.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript">
+$(function (){
+	$("#show").click(function (){
+		//自定义缓冲标题
+		$.myloading({title: $("input").val()});
+		setTimeout(function (){
+			//关闭缓冲效果
+			$.myloading("hide");
+		}, 1000*3);
+	});
+});
+</script>
+</head>
+<body>
+	<input type="text" value="正在加载，请稍后..."/>
+	<button id="show">显示</button>
+</body>
+</html>

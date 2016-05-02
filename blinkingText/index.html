@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>highlight</title>
+<script src="../jquery-1.12.3.min.js"></script>
+<script src="jq_myblink.js"></script>
+<style type="text/css">
+body {
+	margin: 50px;
+	font: 15px Arial;
+	line-height: 1.5;
+}
+input, button { padding: .3em; }
+.highlight {
+	background: yellow;
+}
+</style>
+<script type="text/javascript">
+$(function (){
+$("#blink").click(function (){
+$("div").myblink({
+	interval: 300,		//闪动间隔时间，默认为100
+	blink_count: 3,		//最大闪动次数，0表示无限
+	before_blink: function (obj){	//闪动前回调方法
+		$(obj).css({color: "red"});
+	},
+	after_blink: function (obj){	//闪动结束回调方法
+		$(obj).css({color: "black"});
+	}
+});
+});
+});
+</script>
+</head>
+<body>
+  <button id="blink">start blink</button>
+  <div>北京时间4月22日，雷霆客场以131-102击败了小牛，总比分2-1领先。</div>
+</body>
+</html>

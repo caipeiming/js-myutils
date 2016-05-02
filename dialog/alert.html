@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+<script src="../jquery-1.12.3.min.js"></script>
+<script src="jq_mydialog.js"></script>
+<link href="my_dialog.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript">
+$(function (){
+	$("#show").click(function (){
+		$.myalert({
+			content: $("input").val(),
+			confirm_btn_click: function (e){	//确认按钮点击事件
+				$.myalert("getDialog").mydialog("hide");
+			}
+		});
+	});
+});
+</script>
+</head>
+<body>
+	<input type="text" value="确定要删除吗？！"/>
+	<button id="show">打开</button>
+</body>
+</html>

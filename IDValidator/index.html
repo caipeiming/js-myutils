@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="IDValidator.js" charset="utf-8" ></script>
+<script type="text/javascript" src="GB2260.js" charset="utf-8" ></script>
+<title>Insert title here</title>
+<script type="text/javascript">
+	//新建普通实例
+	var IDValitor = new IDValitor();
+	//或使用带地址码实例,需要引入GB2260
+	var IDValitor = new IDValitor();
+	var i = IDValitor.isValid("445221198704282276");
+	var info = IDValitor.getInfo("445221198704282276");
+	console.log(i);
+	console.log(info);
+</script>
+</head>
+<body>
+
+</body>
+</html>
