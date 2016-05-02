@@ -1,4 +1,5 @@
 dialog:
+
 1. 正在加载提示框
 
 使用javascript、css设置半透明遮罩层缓冲效果，兼容ie、火狐、google chome等浏览器
