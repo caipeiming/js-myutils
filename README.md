@@ -85,8 +85,11 @@ Validator.isValid(code);
 //号码合法时返回分析信息（地区、出生日期、性别、校验位），不合法返回false
 Validator.getInfo(code);
  
-//仿造一个身份证号
+//仿造一个18位身份证号
 Validator.makeID()
+
+//仿造一个15位身份证号
+Validator.makeID(true)
 
 #参考资料
 GB 11643-1999 公民身份证号码
