@@ -70,6 +70,4 @@ GB 11643-1999 公民身份证号码
 
 GB 2260-1995 中华人民共和国行政区划代码
 
-example:
-
-http://blog.jdk5.com/zh/javascript-chinese-personal-id-card-validation/
+参考： http://blog.jdk5.com/zh/javascript-chinese-personal-id-card-validation/
