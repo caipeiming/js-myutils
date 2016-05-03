@@ -1,17 +1,16 @@
-function IDValitor() {
+function IDValidator() {
 	var param = {
 		error : {
 			longNumber : '长数字存在精度问题，请使用字符串传值！ Long number is not allowed, because the precision of the Number In JavaScript.'
 		}
 	};
-
 	var util = {
 		checkArg : function(id) {
 			var argType = (typeof id);
 
 			switch (argType) {
 			case 'number':
-				//long number not allowed
+				// long number not allowed
 				id = id.toString();
 				if (id.length > 15) {
 					this.error(param.error.longNumber);
@@ -23,19 +22,17 @@ function IDValitor() {
 			default:
 				return false;
 			}
-
 			id = id.toUpperCase();
-
 			var code = null;
 			if (id.length === 18) {
-				//18位
+				// 18位
 				code = {
 					body : id.slice(0, 17),
 					checkBit : id.slice(-1),
 					type : 18
 				};
 			} else if (id.length === 15) {
-				//15位
+				// 15位
 				code = {
 					body : id,
 					type : 15
@@ -43,25 +40,24 @@ function IDValitor() {
 			} else {
 				return false;
 			}
-
 			return code;
 		}
-		//地址码检查
+		// 地址码检查
 		,
 		checkAddr : function(addr, GB2260) {
 			var addrInfo = this.getAddrInfo(addr, GB2260);
 			return (addrInfo === false ? false : true);
 		}
-		//取得地址码信息
+		// 取得地址码信息
 		,
 		getAddrInfo : function(addr, GB2260) {
 			GB2260 = GB2260 || null;
-			//查询GB/T2260,没有引入GB2260时略过
+			// 查询GB/T2260,没有引入GB2260时略过
 			if (GB2260 === null) {
 				return addr;
 			}
 			if (!GB2260.hasOwnProperty(addr)) {
-				//考虑标准不全的情况，搜索不到时向上搜索
+				// 考虑标准不全的情况，搜索不到时向上搜索
 				var tmpAddr;
 				tmpAddr = addr.slice(0, 4) + '00';
 				if (!GB2260.hasOwnProperty(tmpAddr)) {
@@ -78,7 +74,7 @@ function IDValitor() {
 				return GB2260[addr];
 			}
 		}
-		//生日码检查
+		// 生日码检查
 		,
 		checkBirth : function(birth) {
 			var year, month, day;
@@ -95,36 +91,34 @@ function IDValitor() {
 			}
 			// TODO 是否需要判断年份
 			/*
-			if( year<1800 ){
-			    return false;
-			}
+			 * if( year<1800 ){ return false; }
 			 */
-			//TODO 按月份检测
+			// TODO 按月份检测
 			if (month > 12 || month === 0 || day > 31 || day === 0) {
 				return false;
 			}
 
 			return true;
 		}
-		//顺序码检查
+		// 顺序码检查
 		,
 		checkOrder : function(order) {
-			//暂无需检测
+			// 暂无需检测
 
 			return true;
 		}
-		//加权
+		// 加权
 		,
 		weight : function(t) {
 			return Math.pow(2, t - 1) % 11;
 		}
-		//随机整数
+		// 随机整数
 		,
 		rand : function(max, min) {
 			min = min || 1;
 			return Math.round(Math.random() * (max - min)) + min;
 		}
-		//数字补位
+		// 数字补位
 		,
 		str_pad : function(str, len, chr, right) {
 			str = str.toString();
@@ -144,7 +138,7 @@ function IDValitor() {
 				return str;
 			}
 		}
-		//抛错
+		// 抛错
 		,
 		error : function(msg) {
 			var e = new Error();
@@ -152,24 +146,21 @@ function IDValitor() {
 			throw e;
 		}
 	};
-
 	var _IDValidator = function(GB2260) {
 		if (typeof GB2260 !== "undefined") {
 			this.GB2260 = GB2260;
 		}
-		//建立cache
+		// 建立cache
 		this.cache = {};
 	};
-
 	_IDValidator.prototype = {
-
 		isValid : function(id) {
 			var GB2260 = this.GB2260 || null;
 			var code = util.checkArg(id);
 			if (code === false) {
 				return false;
 			}
-			//查询cache
+			// 查询cache
 			if (this.cache.hasOwnProperty(id)
 					&& typeof this.cache[id].valid !== 'undefined') {
 				return this.cache[id].valid;
@@ -190,7 +181,7 @@ function IDValitor() {
 				return false;
 			}
 
-			//15位不含校验码，到此已结束
+			// 15位不含校验码，到此已结束
 			if (code.type === 15) {
 				this.cache[id].valid = true;
 				return true;
@@ -198,21 +189,21 @@ function IDValitor() {
 
 			/* 校验位部分 */
 
-			//位置加权
+			// 位置加权
 			var posWeight = [];
 			for (var i = 18; i > 1; i--) {
 				var wei = util.weight(i);
 				posWeight[i] = wei;
 			}
 
-			//累加body部分与位置加权的积
+			// 累加body部分与位置加权的积
 			var bodySum = 0;
 			var bodyArr = code.body.split('');
 			for (var j = 0; j < bodyArr.length; j++) {
 				bodySum += (parseInt(bodyArr[j], 10) * posWeight[18 - j]);
 			}
 
-			//得出校验码
+			// 得出校验码
 			var checkBit = 12 - (bodySum % 11);
 			if (checkBit == 10) {
 				checkBit = 'X';
@@ -222,7 +213,7 @@ function IDValitor() {
 			checkBit = (typeof checkBit === 'number' ? checkBit.toString()
 					: checkBit);
 
-			//检查校验码
+			// 检查校验码
 			if (checkBit !== code.checkBit) {
 				this.cache[id].valid = false;
 				return false;
@@ -233,19 +224,19 @@ function IDValitor() {
 
 		}
 
-		//分析详细信息
+		// 分析详细信息
 		,
 		getInfo : function(id) {
 			var GB2260 = this.GB2260 || null;
-			//号码必须有效
+			// 号码必须有效
 			if (this.isValid(id) === false) {
 				return false;
 			}
-			//TODO 复用此部分
+			// TODO 复用此部分
 			var code = util.checkArg(id);
 
-			//查询cache
-			//到此时通过isValid已经有了cache记录
+			// 查询cache
+			// 到此时通过isValid已经有了cache记录
 			if (typeof this.cache[id].info !== 'undefined') {
 				return this.cache[id].info;
 			}
@@ -270,23 +261,23 @@ function IDValitor() {
 				info.checkBit = code.checkBit;
 			}
 
-			//记录cache
+			// 记录cache
 			this.cache[id].info = info;
 
 			return info;
 		}
 
-		//仿造一个号
+		// 仿造一个号
 		,
 		makeID : function(isFifteen) {
 			var GB2260 = this.GB2260 || null;
 
-			//地址码
+			// 地址码
 			var addr = null;
 			if (GB2260 !== null) {
 				var loopCnt = 0;
 				while (addr === null) {
-					//防止死循环
+					// 防止死循环
 					if (loopCnt > 10) {
 						addr = 110101;
 						break;
@@ -304,7 +295,7 @@ function IDValitor() {
 				addr = 110101;
 			}
 
-			//出生年
+			// 出生年
 			var yr = util.str_pad(util.rand(99, 50), 2, '0');
 			var mo = util.str_pad(util.rand(12, 1), 2, '0');
 			var da = util.str_pad(util.rand(28, 1), 2, '0');
@@ -317,21 +308,21 @@ function IDValitor() {
 			var body = addr + yr + mo + da
 					+ util.str_pad(util.rand(999, 1), 3, '1');
 
-			//位置加权
+			// 位置加权
 			var posWeight = [];
 			for (var i = 18; i > 1; i--) {
 				var wei = util.weight(i);
 				posWeight[i] = wei;
 			}
 
-			//累加body部分与位置加权的积
+			// 累加body部分与位置加权的积
 			var bodySum = 0;
 			var bodyArr = body.split('');
 			for (var j = 0; j < bodyArr.length; j++) {
 				bodySum += (parseInt(bodyArr[j], 10) * posWeight[18 - j]);
 			}
 
-			//得出校验码
+			// 得出校验码
 			var checkBit = 12 - (bodySum % 11);
 			if (checkBit == 10) {
 				checkBit = 'X';
@@ -344,6 +335,7 @@ function IDValitor() {
 			return (body + checkBit);
 		}
 
-	};//_IDValidator
-	return _IDValidator;
+	};// _IDValidator
+	GB2260 = GB2260 == null ? "" : GB2260;
+	return new _IDValidator(GB2260);
 }
