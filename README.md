@@ -20,6 +20,8 @@ $.myalert({
 		$.myalert("getDialog").mydialog("hide");
 	}
 });
+参考： http://blog.jdk5.com/zh/javascript-custom-alert-dialog/
+
 ```
 ##3. confirm提示框
 ```javascript
@@ -40,7 +42,7 @@ var options = {
 };
 $.myconfirm(options);
 ```
-
+参考： http://blog.jdk5.com/zh/javascript-custom-confirm-dialog/
 
 #IDValidator-身份证号码有效性验证
 ```javascript
