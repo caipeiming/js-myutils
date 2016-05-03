@@ -2,21 +2,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="../jquery-1.12.3.min.js"></script>
 <script type="text/javascript" src="IDValidator.js" charset="utf-8" ></script>
 <script type="text/javascript" src="GB2260.js" charset="utf-8" ></script>
 <title>Insert title here</title>
+<style type="text/css">
+div{margin: 20px;}
+</style>
 <script type="text/javascript">
-	//新建普通实例
-	var IDValitor = new IDValitor();
-	//或使用带地址码实例,需要引入GB2260
-	var IDValitor = new IDValitor();
-	var i = IDValitor.isValid("445221198704282276");
-	var info = IDValitor.getInfo("445221198704282276");
-	console.log(i);
-	console.log(info);
+//新建普通实例
+var Validator = new IDValidator();
+//或使用带地址码实例,需要引入GB2260
+//var Validator = IDValidator(GB2260);
+
+$(function (){
+	$("#isValid-btn").click(function (){
+		//验证号码是否合法，合法返回true，不合法返回false
+		var code = $("#isValid").val();
+		var i = Validator.isValid(code);
+		$("#isValid-show").html(i == false ? "号码不合法" : "号码合法");
+	});
+	$("#getInfo-btn").click(function (){
+		//号码合法时返回分析信息（地区、出生日期、性别、校验位），不合法返回false
+		var code = $("#getInfo").val();
+		var i = Validator.getInfo(code);
+		$("#getInfo-show").html(i == false ? "号码不合法" : JSON.stringify(i));
+	});
+	$("#makeID18-btn").click(function (){
+		//仿造一个18位身份证号
+		$("#makeID18-show").html(Validator.makeID());
+	});
+	$("#makeID15-btn").click(function (){
+		//仿造一个15位身份证号
+		$("#makeID15-show").html(Validator.makeID(true));
+	});
+});
 </script>
 </head>
 <body>
-
+<div>
+	<input id="isValid" />
+	<button id="isValid-btn">判断是否合法</button>
+	<div id="isValid-show"></div>
+</div>
+<div>
+	<input id="getInfo" />
+	<button id="getInfo-btn">身份证详细信息</button>
+	<div id="getInfo-show"></div>
+</div>
+<div>
+	<button id="makeID18-btn">仿造一个18位身份证号</button>
+	<div id="makeID18-show"></div>
+</div>
+<div>
+	<button id="makeID15-btn">仿造一个15位身份证号</button>
+	<div id="makeID15-show"></div>
+</div>
 </body>
 </html>
