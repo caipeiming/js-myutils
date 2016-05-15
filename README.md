@@ -71,3 +71,21 @@ GB 11643-1999 公民身份证号码
 GB 2260-1995 中华人民共和国行政区划代码
 
 参考： http://blog.jdk5.com/zh/javascript-chinese-personal-id-card-validation/
+
+#validate
+##numeric-input 输入框控件只允许输入数字
+```javascript
+$("#positive_number").myvalidate({
+	filter_type: "positiveNumber", 
+	enterCallback: function (obj){
+		//enter key callback
+		alert(parseFloat(obj.val()));
+	}, valCallback: function (val){
+		//pressup callback,  return value
+		$("div").html(val);
+	}
+});
+$("#positive_number").focus();
+```
+
+参考： http://blog.jdk5.com/zh/javascript-html-input-allow-only-numeric-input/
