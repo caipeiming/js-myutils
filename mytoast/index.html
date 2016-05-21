@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+<script src="../jquery-1.12.3.min.js"></script>
+<script src="js/jq_mytoast.js"></script>
+<link href="css/my_toast.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript">
+$(function (){
+	$("#show").click(function (){
+		var content = $("input").val();
+		//自定义通知信息
+		$.mytoast({
+			text: content,
+			type: "notice"
+		});
+	});
+});
+</script>
+</head>
+<body>
+	<input type="text" value="正在加载，请稍后..."/>
+	<button id="show">显示</button>
+</body>
+</html>

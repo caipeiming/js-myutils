@@ -1,0 +1,14 @@
+.my-toast {
+	font-family: 'Microsoft YaHei'; position: fixed;  _position: absolute; top: 50%; left: 50%;
+    background-color: #383838; color: #F0F0F0; font-size: 15px; padding:10px; border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);}
+.my-toast .my-toast-text{
+	line-height: 32px; float: left; padding-left: 10px; text-align: left; width: auto;
+	word-break: break-all;}
+.my-toast .my-toast-icon{width: 32px; height: 32px; float: left; }
+.my-toast .my-toast-error{ background-image: url('../img/error.png'); }
+.my-toast .my-toast-notice{ background-image: url('../img/notice.png'); }
+.my-toast .my-toast-success{ background-image: url('../img/success.png');}
+.my-toast .my-toast-warning{background-image: url('../img/warning.png');}

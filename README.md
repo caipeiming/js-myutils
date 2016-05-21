@@ -89,3 +89,19 @@ $("#positive_number").focus();
 ```
 
 参考： http://blog.jdk5.com/zh/javascript-html-input-allow-only-numeric-input/
+
+#toast message JavaScript仿安卓实现toast message效果
+
+```javascript
+//错误
+$.mytoast({text: "操作失败！",type: "error"});
+//成功
+$.mytoast({text: "操作成功！",type: "success"});
+//警告
+$.mytoast({text: "警告",type: "warning"});
+//通知
+$.mytoast({text: "通知",type: "notice"});
+```
+
+
+参考：http://blog.jdk5.com/zh/javascript-toast-message-notifications-like-android/
