@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="../jquery-1.12.3.min.js"></script>
+    <title>格式化时间</title>
+    <script type="text/javascript">
+        /**
+         * 格式化时间
+         * @param  date   Date对象
+         * @param  format 格式化字符串：y - 年份。yy 表示两位年份，yyyy 表示 4 位年份 
+         *                           M - 月份。M 表示月份(1-12)，MM 表示2位数的月份，不足2位数，第一位补0
+         *                           d - 月份中的天数。d 表示天数(1-31)，dd 表示天数
+         *                           H - 一天中的小时数0~23)。H 表示小时数， HH 表示2位的小时数，不足2位数，第一位补0
+         *                           m - 分钟数。用 m 表示分钟数(0-59)，mm 表示2位的分钟数，不足2位数，第一位补0
+         *                           s - 秒数。用 s 表示秒数(0-59)，ss 表示2位数的秒数，不足2位数，第一位补0
+         *                           
+         * @return 返回格式化后的字符串
+         */
+        function formatDate (date, format) {
+            if (date == null) {
+                return "";
+            }
+            var pad = (n) =>  {
+                return n < 10 ? '0' + n : n;
+            }
+            var year = date.getFullYear();
+            var yearShort = year.toString().substring(2);
+            var month = date.getMonth() + 1;
+            var monthPad = pad(month);
+            var dateInMonth = date.getDate();
+            var dateInMonthPad = pad(dateInMonth);
+            var hour = date.getHours();
+            var hourPad = pad(hour);
+            var minute = date.getMinutes();
+            var minutePad = pad(minute);
+            var second = date.getSeconds();
+            var secondPad = pad(second);
+            return format.replace(/yyyy/g, year).replace(/yy/g, yearShort)
+                        .replace(/MM/g, monthPad).replace(/M/g, month)
+                        .replace(/dd/g, dateInMonthPad).replace(/d/g, dateInMonth)
+                        .replace(/HH/g, hourPad).replace(/H/g, hour)
+                        .replace(/mm/g, minutePad).replace(/m/g, minute)
+                        .replace(/ss/g, secondPad).replace(/s/g, second);
+        }
+        $(function (){
+            $("#format-btn").click(function (){
+                var format = $("#format").val();
+                var result = formatDate(new Date(), format);
+                $("#result").html("格式后结果：" + result);
+            });
+        });
+    </script>
+    <style type="text/css">
+        div {margin: 10px;}
+        input {width: 250px; height: 30px; font-size: 14px; margin: 0px; padding: 0px;}
+        button {width: 100px; height: 30px; margin: 0px; padding: 0px; font-size: 14px;}
+    </style>
+</head>
+<body>
+    <pre>
+格式化字符串: y - 年份。yy 表示两位年份，yyyy 表示 4 位年份 
+            M - 月份。M 表示月份(1-12)，MM 表示2位数的月份，不足2位数，第一位补0
+            d - 月份中的天数。d 表示天数(1-31)，dd 表示天数
+            H - 一天中的小时数0~23)。H 表示小时数， HH 表示2位的小时数，不足2位数，第一位补0
+            m - 分钟数。用 m 表示分钟数(0-59)，mm 表示2位的分钟数，不足2位数，第一位补0
+            s - 秒数。用 s 表示秒数(0-59)，ss 表示2位数的秒数，不足2位数，第一位补0
+    </pre>
+	<div>
+        <p>请输入格式，如 yyyy-MM-dd HH:mm:ss</p>
+        <input id="format" placeholder="请输入时间格式" />
+        <button id="format-btn">格式化</button>
+    </div>
+    <div id="result"></div>
+</body>
+</html>
