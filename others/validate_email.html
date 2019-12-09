@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="../jquery-1.12.3.min.js"></script>
+    <title>验证邮箱</title>
+    <script type="text/javascript">
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+        $(function (){
+            $("#validate-btn").click(function (){
+                var format = $("#email").val();
+                var result = validateEmail(format);
+                $("#result").html("结果：" + result);
+            });
+        });
+    </script>
+    <style type="text/css">
+        div {margin: 10px;}
+        input {width: 250px; height: 30px; font-size: 14px; margin: 0px; padding: 0px;}
+        button {width: 100px; height: 30px; margin: 0px; padding: 0px; font-size: 14px;}
+    </style>
+</head>
+<body>
+    <div>
+        <p>请输入邮箱，如 2323@gmail.com</p>
+        <input id="email" placeholder="请输入邮箱" />
+        <button id="validate-btn">验证</button>
+    </div>
+    <div id="result"></div>
+</body>
+</html>
